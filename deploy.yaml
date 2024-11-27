@@ -1,0 +1,39 @@
+apps:
+  - app:
+      port: "8088"
+      version: "1.0.0"
+      name: "gateway_module"
+    http:
+      base_url: "http://localhost:3000"
+      router:
+        - method: "GET"
+          get_type: "query"
+          path: "/api/query"
+          variable:
+            - "name"
+            - "age"
+          
+        - method: "GET"
+          get_type: "url"
+          path: "/api/user/:id"
+          
+        - method: "POST"
+          path: "/api/create"
+          header: 
+            "Content-Type": "application/json"
+
+        - method: "PUT"
+          path: "/api/update"
+          header:
+            "Content-Type": "application/json"
+
+        - method: "DELETE"
+          path: "/api/delete"
+          header:
+            "Content-Type": "application/json"
+    kafka:
+      url: "localhost:19092,localhost:29092,localhost:39092"
+      client_id: "gateway_module"
+      acks: "all"
+      topic: "api-trace"
+      batch_time: 1
